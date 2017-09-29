@@ -34,6 +34,7 @@ public class AddGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         addNameText = new javax.swing.JTextField();
@@ -44,26 +45,31 @@ public class AddGUI extends javax.swing.JFrame {
         addMailText = new javax.swing.JTextField();
         confirmButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        addYear = new javax.swing.JTextField();
+        phoneLabel = new javax.swing.JLabel();
+        addPhoneNumber = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Nome");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
 
         jLabel2.setText("Morada");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
-        getContentPane().add(addNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 250, -1));
-        getContentPane().add(addAdressText, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 250, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
+        getContentPane().add(addNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 250, -1));
+        getContentPane().add(addAdressText, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 250, -1));
 
         jLabel3.setText("Curso");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
-        getContentPane().add(addCourseText, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 250, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, -1, -1));
+        getContentPane().add(addCourseText, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 250, -1));
 
         jLabel4.setText("Mail");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
-        getContentPane().add(addMailText, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 250, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, -1, -1));
+        getContentPane().add(addMailText, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 250, -1));
 
         confirmButton.setText("Confirmar");
         confirmButton.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +77,7 @@ public class AddGUI extends javax.swing.JFrame {
                 confirmButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(confirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, -1, -1));
+        getContentPane().add(confirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, -1, -1));
 
         cancelButton.setText("Cancelar");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -79,8 +85,20 @@ public class AddGUI extends javax.swing.JFrame {
                 cancelButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, -1, -1));
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 370));
+        getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, -1, -1));
+
+        jLabel6.setText("Ano de inscrição");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, -1, -1));
+        getContentPane().add(addYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 120, 250, -1));
+
+        phoneLabel.setText("Nº Telefone");
+        getContentPane().add(phoneLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
+        getContentPane().add(addPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 250, -1));
+
+        jLabel7.setFont(new java.awt.Font("Malayalam MN", 1, 24)); // NOI18N
+        jLabel7.setText("INSCRIÇÃO");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -108,8 +126,14 @@ public class AddGUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Nome já existente no sistema!");
             }
             else{
-                Partner p = new Partner(addNameText.getText(), addCourseText.getText(), addAdressText.getText(), addMailText.getText());
+                if(this.partners.size()==0){
+                    this.partners.setN(1);
+                }
+                Partner p = new Partner(addNameText.getText(), addCourseText.getText(), addAdressText.getText(), addMailText.getText(), addPhoneNumber.getText(), addYear.getText());
+                p.setNumber(this.partners.getN());
+                this.partners.setN(this.partners.getN()+1);
                 this.partners.addPartner(p);
+                
             }
             setVisible(false);
         }
@@ -155,6 +179,8 @@ public class AddGUI extends javax.swing.JFrame {
     private javax.swing.JTextField addCourseText;
     private javax.swing.JTextField addMailText;
     private javax.swing.JTextField addNameText;
+    private javax.swing.JTextField addPhoneNumber;
+    private javax.swing.JTextField addYear;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton confirmButton;
     private javax.swing.JLabel jLabel1;
@@ -162,5 +188,9 @@ public class AddGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel phoneLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,6 +7,7 @@ package partnersmanagement;
 
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -55,7 +56,7 @@ public class JPartner extends javax.swing.JFrame implements Observer {
         jMenu15 = new javax.swing.JMenu();
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         addButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        consultingButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         jMenu1.setText("jMenu1");
@@ -165,8 +166,13 @@ public class JPartner extends javax.swing.JFrame implements Observer {
         });
         getContentPane().add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 140, -1));
 
-        jButton2.setText("Consultar Sócios");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 140, -1));
+        consultingButton.setText("Consultar Sócios");
+        consultingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultingButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(consultingButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 140, -1));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 280));
 
         pack();
@@ -176,6 +182,11 @@ public class JPartner extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
         new AddGUI(this.partners).setVisible(true);
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void consultingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultingButtonActionPerformed
+        // TODO add your handling code here:
+        new partnersListGUI(this.partners).setVisible(true);
+    }//GEN-LAST:event_consultingButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,7 +225,7 @@ public class JPartner extends javax.swing.JFrame implements Observer {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton consultingButton;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;

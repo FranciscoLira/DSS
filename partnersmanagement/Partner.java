@@ -20,10 +20,11 @@ public class Partner {
     private String address;
     private String year;
     private String mail;
+    private String phoneNumber;
     private List<Quota> quotas;
     
     public Partner(){
-        this("", "", "", "");
+        this("", "", "", "", "", "");
     }
     
     public Partner(Partner p){
@@ -33,15 +34,18 @@ public class Partner {
         this.mail = p.getMail();
         this.number = p.getNumber();
         this.year = p.getYear();
+        this.phoneNumber = p.getPhoneNumber();
         this.quotas = p.getQuotas();
     }
 
-    public Partner(String name, String course, String addr, String m){
+    public Partner(String name, String course, String addr, String m, String phone, String year){
         this.name = name;
         this.course = course;
         this.address = addr;
         this.mail = m;
-        this.quotas = new ArrayList<Quota>();
+        this.phoneNumber = phone;
+        this.year = year;
+        this.quotas = new ArrayList<>();
     }
     
     public String getName(){
@@ -66,6 +70,14 @@ public class Partner {
     
     public String getMail(){
         return this.mail;
+    }
+    
+    public String getPhoneNumber(){
+        return this.phoneNumber;
+    }
+    
+    public void setNumber(int x){
+        this.number = x;
     }
     
     public ArrayList<Quota> getQuotas(){

@@ -6,6 +6,7 @@
 package partnersmanagement;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -13,15 +14,15 @@ import java.time.LocalDate;
  */
 public class Quota {
     
-    private LocalDate date;
+    private Date date;
     private double value;
     
-    public Quota(LocalDate d, double v){
+    public Quota(Date d, double v){
         this.date = d;
         this.value = v;
     }
     
-    public LocalDate getDate(){
+    public Date getDate(){
         return this.date;
     }
     
@@ -29,7 +30,7 @@ public class Quota {
         return this.value;
     }
     
-    public void setDate(LocalDate d){
+    public void setDate(Date d){
         this.date = d;
     }
     

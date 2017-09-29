@@ -17,6 +17,8 @@ import java.util.*;
  */
 public class PartnersList extends Observable{
     
+    private int y;//ano de inscriçao do socio
+    private int n;//numero de socio
     private Map<String,Partner> group;
     
     public PartnersList(){
@@ -36,6 +38,17 @@ public class PartnersList extends Observable{
         return res;
     }
     
+    public Partner getPartnerByName(String s){
+        for(Partner p: this.group.values()){
+            if(p.getName().equals(s)) return p;
+        }
+        return null;
+    }
+    
+    public int getN(){
+        return this.n;
+    }
+    
     /*public Map<Integer, Partner> getGroup(){
         Map<Integer,Partner> res = new TreeMap<Integer,Partner>();
         for(Partner p: this.group.values()){
@@ -44,11 +57,16 @@ public class PartnersList extends Observable{
         return res;
     }*/
     
+   
+    public void setN(int x){
+        this.n = x;
+    }
+    
     public void pagarQuota(Integer numero, Double valor){
-        LocalDate d = null;
+        Date d = null;
         for(Partner p: this.group.values()){
             if(p.getNumber() == numero){
-                this.group.get(p.getMail()).getQuotas().add(new Quota(d.now(), valor));
+                this.group.get(p.getMail()).getQuotas().add(new Quota(d, valor));
             }
         }
     }

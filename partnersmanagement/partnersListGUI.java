@@ -5,19 +5,78 @@
  */
 package partnersmanagement;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
  * @author Tiago
  */
 public class partnersListGUI extends javax.swing.JFrame {
-
+    
+    private PartnersList partners;
+    private DefaultListModel dlm = null;
+    
     /**
      * Creates new form partnersListGUI
      */
-    public partnersListGUI() {
+    
+    public partnersListGUI(){
         initComponents();
     }
-
+    
+    public partnersListGUI(PartnersList p){
+        this.partners = p;
+        initComponents();
+    }
+   
+    private DefaultListModel getListModel(PartnersList l){
+        if(dlm == null){
+            dlm = new DefaultListModel();
+            for(Partner p: l.getGroup().values()){
+                dlm.addElement(p.getMail());
+            }
+        }
+        return dlm;
+    }
+   
+    private JList getList(){
+        if(jLdemo == null){
+            jLdemo = new JList();
+            jLdemo.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    // Note que "e.getValueIsAdjusting" e "lstList.getSelectedValue() != null" abaixo
+                    // não são enfeite: se você não tratar essa condição, você vai tomar um NullPointerException
+                    if (!e.getValueIsAdjusting() && jLdemo.getSelectedValue() != null) {
+                        String mail = jLdemo.getSelectedValue().toString();
+                        openViewPartnerWindow(mail);
+                        //getLblTextoSelecionado().setText("Elemento selecionado: " + text);
+                    }
+                }
+            });
+            jLdemo.setModel(getListModel(this.partners));
+            jLdemo.setFocusCycleRoot(true);
+            jLdemo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        }
+        return jLdemo;
+    }
+    
+    private JLabel getLblTextoSelecionado() {
+        if (jLabel1 == null) {
+            jLabel1 = new JLabel("Clique em um item do JLabel");
+        }
+        return jLabel1;
+    }
+    
+    private void openViewPartnerWindow(String mail){
+        new partnersViewGUI(this.partners.getGroup().get(mail)).setVisible(true);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,20 +86,60 @@ public class partnersListGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jLdemo = getList();
+        jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jMenuItem1.setText("jMenuItem1");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jMenuItem2.setText("jMenuItem2");
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 240, -1));
+        jMenuItem3.setText("jMenuItem3");
+
+        jMenuItem4.setText("jMenuItem4");
+
+        jMenuItem5.setText("jMenuItem5");
+
+        jMenu3.setText("jMenu3");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Lista de Sócios");
+
+        jLdemo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jScrollPane1.setViewportView(jLdemo);
+
+        jLabel1.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Lista de Sócios");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jLabel1)
+                .addContainerGap(113, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -71,17 +170,23 @@ public class partnersListGUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(partnersListGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new partnersListGUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new partnersListGUI().setVisible(true);
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<String> jLdemo;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
