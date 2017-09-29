@@ -10,8 +10,9 @@ package partnersmanagement;
  * @author Tiago
  */
 public class partnersViewGUI extends javax.swing.JFrame {
-    
-    private Partner partner;
+        
+    private String mail;
+    private PartnersList partners;
     /**
      * Creates new form partnersViewGUI
      */
@@ -19,21 +20,11 @@ public class partnersViewGUI extends javax.swing.JFrame {
         initComponents();
     }
     
-    public partnersViewGUI(Partner p){
+    public partnersViewGUI(PartnersList l, String mail){
         initComponents();
-        this.partner = p;
-        this.nameField.setText(this.partner.getName());
-        this.mailField.setText(this.partner.getMail());
-        this.addressField.setText(this.partner.getAddress());
-        this.courseField.setText(this.partner.getCourse());
-        this.numberField.setText(String.valueOf(this.partner.getNumber()));
-        this.phoneField.setText(this.partner.getPhoneNumber());
-        this.nameField.setEditable(false);
-        this.mailField.setEditable(false);
-        this.addressField.setEditable(false);
-        this.courseField.setEditable(false);
-        this.numberField.setEditable(false);
-        this.phoneField.setEditable(false);
+        this.partners = l;
+        this.mail = mail;
+        showData(this.partners.getGroup().get(mail));
     }
 
     /**
@@ -115,7 +106,7 @@ public class partnersViewGUI extends javax.swing.JFrame {
                 updateDataButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(updateDataButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 140, 30));
+        getContentPane().add(updateDataButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 140, 40));
 
         quotaButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         quotaButton.setText("Ver Quotas");
@@ -124,7 +115,7 @@ public class partnersViewGUI extends javax.swing.JFrame {
                 quotaButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(quotaButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 200, 140, -1));
+        getContentPane().add(quotaButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 200, 140, 40));
 
         jLabel7.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
         jLabel7.setText("SÓCIO");
@@ -133,15 +124,31 @@ public class partnersViewGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void showData(Partner p){
+        this.nameField.setText(p.getName());
+        this.mailField.setText(p.getMail());
+        this.addressField.setText(p.getAddress());
+        this.courseField.setText(p.getCourse());
+        this.numberField.setText(String.valueOf(p.getNumber()));
+        this.phoneField.setText(p.getPhoneNumber());
+        this.nameField.setEditable(false);
+        this.mailField.setEditable(false);
+        this.addressField.setEditable(false);
+        this.courseField.setEditable(false);
+        this.numberField.setEditable(false);
+        this.phoneField.setEditable(false);
+    }
+    
     private void quotaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quotaButtonActionPerformed
         // TODO add your handling code here:
-        new quotaGUI(this.partner).setVisible(true);
+        new quotaGUI(this.partners.getGroup().get(this.mail)).setVisible(true);
     }//GEN-LAST:event_quotaButtonActionPerformed
 
     private void updateDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateDataButtonActionPerformed
         // TODO add your handling code here:
-        
+        new updatePartnerGUI(this.partners, mail).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_updateDataButtonActionPerformed
 
     /**

@@ -83,6 +83,25 @@ public class PartnersList extends Observable{
         this.group.put(p.getMail(), (Partner) p.clone());
     }
     
+    public void updatePartner(String actualMail, String course, String newMail, String phone, String address){
+        if(this.group.containsKey(newMail)){
+            Partner p = this.group.get(newMail);
+            p.setCourse(course);
+            p.setPhone(phone);
+            p.setAddress(address);
+            this.group.put(p.getMail(), p);
+        }
+        else{
+            Partner p = this.group.get(actualMail);
+            p.setMail(newMail);
+            p.setCourse(course);
+            p.setPhone(phone);
+            p.setAddress(address);
+           this.group.replace(actualMail, p);
+        }
+        
+    }
+    
     public int size(){
         return this.group.size();
     }

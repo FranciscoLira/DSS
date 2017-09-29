@@ -76,6 +76,22 @@ public class Partner {
         return this.phoneNumber;
     }
     
+    public void setCourse(String c){
+        this.course = c;
+    }
+    
+    public void setMail(String m){
+        this.mail = m;
+    }   
+    
+    public void setPhone(String n){
+        this.phoneNumber = n;
+    }
+    
+    public void setAddress(String a){
+        this.address = a;
+    }
+    
     public void setNumber(int x){
         this.number = x;
     }
