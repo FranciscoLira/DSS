@@ -45,7 +45,7 @@ public class Partner {
         this.mail = m;
         this.phoneNumber = phone;
         this.year = year;
-        this.quotas = new ArrayList<>();
+        this.quotas = new ArrayList<Quota>();
     }
     
     public String getName(){
@@ -101,6 +101,10 @@ public class Partner {
         for(Quota q : this.quotas)
             res.add((Quota) q.clone());
         return (ArrayList<Quota>) res;
+    }
+    
+    public void addQuota(Quota q){
+        this.quotas.add(q);
     }
     
     public boolean equals(Object o){

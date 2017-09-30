@@ -5,6 +5,8 @@
  */
 package partnersmanagement;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -47,12 +49,11 @@ public class partnersListGUI extends javax.swing.JFrame {
     private JList getList(){
         if(jLdemo == null){
             jLdemo = new JList();
-            jLdemo.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
+            jLdemo.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
                     // Note que "e.getValueIsAdjusting" e "lstList.getSelectedValue() != null" abaixo
                     // não são enfeite: se você não tratar essa condição, você vai tomar um NullPointerException
-                    if (!e.getValueIsAdjusting() && jLdemo.getSelectedValue() != null) {
+                    if (e.getClickCount() == 2 && jLdemo.getSelectedValue() != null) {
                         String mail = jLdemo.getSelectedValue().toString();
                         openViewPartnerWindow(mail);
                         //getLblTextoSelecionado().setText("Elemento selecionado: " + text);
@@ -74,8 +75,8 @@ public class partnersListGUI extends javax.swing.JFrame {
     }
     
     private void openViewPartnerWindow(String mail){
-        new partnersViewGUI(this.partners, mail).setVisible(true);
-        setVisible(false);
+        new partnersViewGUI(this, this.partners, mail).setVisible(true);
+        //setVisible(false);
     }
     
     /**
@@ -97,6 +98,9 @@ public class partnersListGUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jLdemo = getList();
         jLabel1 = new javax.swing.JLabel();
+        deleteButton = new javax.swing.JButton();
+        observButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -112,36 +116,53 @@ public class partnersListGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lista de Sócios");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLdemo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLdemo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setViewportView(jLdemo);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 440, 170));
 
         jLabel1.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Lista de Sócios");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 31, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addComponent(jLabel1)
-                .addContainerGap(127, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
-        );
+        deleteButton.setText("Remover Sócio");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
+
+        observButton.setText("Ver Detalhes");
+        observButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                observButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(observButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, -1, -1));
+
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+        String mail = jLdemo.getSelectedValue().toString();
+        this.partners.removePartner(mail);
+        setVisible(false);
+        new partnersListGUI(this.partners).setVisible(true);
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void observButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_observButtonActionPerformed
+        // TODO add your handling code here:
+        String mail = jLdemo.getSelectedValue().toString();
+        openViewPartnerWindow(mail);
+    }//GEN-LAST:event_observButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,8 +198,10 @@ public class partnersListGUI extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton deleteButton;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jLdemo;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
@@ -187,5 +210,6 @@ public class partnersListGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton observButton;
     // End of variables declaration//GEN-END:variables
 }

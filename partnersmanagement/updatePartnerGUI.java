@@ -46,6 +46,7 @@ public class updatePartnerGUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         updateButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -74,6 +75,7 @@ public class updatePartnerGUI extends javax.swing.JFrame {
         jLabel5.setText("Atualização de dados");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 28, -1, -1));
 
+        updateButton.setFont(new java.awt.Font("Lucida Sans", 0, 13)); // NOI18N
         updateButton.setText("Atualizar");
         updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +84,7 @@ public class updatePartnerGUI extends javax.swing.JFrame {
         });
         getContentPane().add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, -1, -1));
 
+        cancelButton.setFont(new java.awt.Font("Lucida Sans", 0, 13)); // NOI18N
         cancelButton.setText("Cancelar");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,6 +92,7 @@ public class updatePartnerGUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 86, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 290));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -116,6 +120,8 @@ public class updatePartnerGUI extends javax.swing.JFrame {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
+        new partnersListGUI(this.partners).setVisible(true);
+        new partnersViewGUI(this.partners, this.mail).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
@@ -163,6 +169,7 @@ public class updatePartnerGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField mailField;
     private javax.swing.JTextField phoneField;
     private javax.swing.JButton updateButton;

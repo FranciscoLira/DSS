@@ -96,9 +96,9 @@ public class AddGUI extends javax.swing.JFrame {
         getContentPane().add(addPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 250, -1));
 
         jLabel7.setFont(new java.awt.Font("Malayalam MN", 1, 24)); // NOI18N
-        jLabel7.setText("INSCRIÇÃO");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 370));
+        jLabel7.setText("REGISTAR SÓCIO");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

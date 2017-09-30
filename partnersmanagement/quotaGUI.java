@@ -5,7 +5,11 @@
  */
 package partnersmanagement;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -15,7 +19,8 @@ public class quotaGUI extends javax.swing.JFrame {
     
     private DefaultListModel dlmDate = null;
     private DefaultListModel dlmValue = null;
-    private Partner partner;
+    private PartnersList partners;
+    private String mail;
     /**
      * Creates new form quotaGUI
      */
@@ -23,23 +28,52 @@ public class quotaGUI extends javax.swing.JFrame {
         initComponents();
     }
     
-    public quotaGUI(Partner p){
+    public quotaGUI(PartnersList l, String mail){
+        this.partners = l;
+        this.mail = mail;
         initComponents();
-        this.partner = p;
-        getListModel(p);
-        dateList.setModel(dlmDate);
-        valueList.setModel(dlmValue);
     }
     
-    private void getListModel(Partner p){
-        if(dlmDate == null && dlmValue == null){
+  private DefaultListModel getDateListModel(Partner p){
+        if(dlmDate == null){
             dlmDate = new DefaultListModel();
-            dlmValue = new DefaultListModel();
             for(Quota q: p.getQuotas()){
                 dlmDate.addElement(q.getDate());
+            }
+        }
+        return dlmDate;
+    }
+    
+    private DefaultListModel getValueListModel(Partner p){
+        if(dlmValue == null){
+            dlmValue = new DefaultListModel();
+            for(Quota q: p.getQuotas()){
                 dlmValue.addElement(q.getValue());
             }
         }
+        return dlmValue;
+    }
+    
+    private JList getDateList(){
+        if(dateList == null){
+            dateList = new JList();
+            
+            dateList.setModel(getDateListModel(this.partners.getGroup().get(this.mail)));
+            dateList.setFocusCycleRoot(true);
+            dateList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        }
+        return dateList;
+    }
+    
+    private JList getValueList(){
+        if(valueList == null){
+            valueList = new JList();
+            
+            valueList.setModel(getValueListModel(this.partners.getGroup().get(this.mail)));
+            valueList.setFocusCycleRoot(true);
+            valueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        }
+        return valueList;
     }
    
 
@@ -53,9 +87,9 @@ public class quotaGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        dateList = new javax.swing.JList<>();
+        dateList = getDateList();
         jScrollPane3 = new javax.swing.JScrollPane();
-        valueList = new javax.swing.JList<>();
+        valueList = getValueList();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         payButton = new javax.swing.JButton();
@@ -83,15 +117,16 @@ public class quotaGUI extends javax.swing.JFrame {
                 payButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(payButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 304, -1, -1));
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 380));
+        getContentPane().add(payButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void payButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payButtonActionPerformed
         // TODO add your handling code here:
-        new payGUI(this.partner).setVisible(true);
+        new payGUI(this.partners, this.mail).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_payButtonActionPerformed
 
     /**

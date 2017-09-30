@@ -10,7 +10,8 @@ package partnersmanagement;
  * @author Tiago
  */
 public class partnersViewGUI extends javax.swing.JFrame {
-        
+    
+    private partnersListGUI g;
     private String mail;
     private PartnersList partners;
     /**
@@ -24,6 +25,14 @@ public class partnersViewGUI extends javax.swing.JFrame {
         initComponents();
         this.partners = l;
         this.mail = mail;
+        showData(this.partners.getGroup().get(mail));
+    }
+    
+    public partnersViewGUI(partnersListGUI g, PartnersList l, String mail){
+        initComponents();
+        this.partners = l;
+        this.mail = mail;
+        this.g = g;
         showData(this.partners.getGroup().get(mail));
     }
 
@@ -56,27 +65,27 @@ public class partnersViewGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
         jLabel1.setText("Nome");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
         jLabel2.setText("Curso");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
         jLabel3.setText("Morada");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
         jLabel4.setText("Nº Sócio");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
         jLabel5.setText("Mail");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
         jLabel6.setText("Nº tlf.");
         jLabel6.setToolTipText("");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
@@ -99,7 +108,7 @@ public class partnersViewGUI extends javax.swing.JFrame {
         numberField.setFont(new java.awt.Font("Lucida Sans", 0, 13)); // NOI18N
         getContentPane().add(numberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 140, -1));
 
-        updateDataButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        updateDataButton.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         updateDataButton.setText("Atualizar dados");
         updateDataButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +117,7 @@ public class partnersViewGUI extends javax.swing.JFrame {
         });
         getContentPane().add(updateDataButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 140, 40));
 
-        quotaButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        quotaButton.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         quotaButton.setText("Ver Quotas");
         quotaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,7 +126,7 @@ public class partnersViewGUI extends javax.swing.JFrame {
         });
         getContentPane().add(quotaButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 200, 140, 40));
 
-        jLabel7.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 24)); // NOI18N
         jLabel7.setText("SÓCIO");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 360));
@@ -142,13 +151,14 @@ public class partnersViewGUI extends javax.swing.JFrame {
     
     private void quotaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quotaButtonActionPerformed
         // TODO add your handling code here:
-        new quotaGUI(this.partners.getGroup().get(this.mail)).setVisible(true);
+        new quotaGUI(this.partners, this.mail).setVisible(true);
     }//GEN-LAST:event_quotaButtonActionPerformed
 
     private void updateDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateDataButtonActionPerformed
         // TODO add your handling code here:
         new updatePartnerGUI(this.partners, mail).setVisible(true);
         setVisible(false);
+        if(g!=null) g.setVisible(false);
     }//GEN-LAST:event_updateDataButtonActionPerformed
 
     /**
