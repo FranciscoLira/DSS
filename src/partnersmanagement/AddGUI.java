@@ -5,6 +5,7 @@
  */
 package partnersmanagement;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class AddGUI extends javax.swing.JFrame {
     
+    private boolean comesFromList;
     private PartnersList partners;
     /**
      * Creates new form AddGUI
@@ -20,9 +22,17 @@ public class AddGUI extends javax.swing.JFrame {
     public AddGUI(){
         initComponents();
     }
+    
+    public AddGUI(PartnersList p, partnersListGUI l){
+        initComponents();
+        this.partners = p;
+        this.comesFromList = true;
+    }
+    
     public AddGUI(PartnersList p) {
         initComponents();
         this.partners = p;
+        this.comesFromList = false;
     }
 
     /**
@@ -50,6 +60,7 @@ public class AddGUI extends javax.swing.JFrame {
         phoneLabel = new javax.swing.JLabel();
         addPhoneNumber = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -96,20 +107,35 @@ public class AddGUI extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         jLabel6.setText("Ano de inscrição");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 100, -1, -1));
+
+        addYear.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                addYearKeyTyped(evt);
+            }
+        });
         getContentPane().add(addYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 250, -1));
 
         phoneLabel.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         phoneLabel.setText("Nº Telefone");
         getContentPane().add(phoneLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
+
+        addPhoneNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                addPhoneNumberKeyTyped(evt);
+            }
+        });
         getContentPane().add(addPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 250, -1));
 
         jLabel7.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 24)); // NOI18N
         jLabel7.setText("REGISTAR SÓCIO");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
 
-        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("(9 Algarismos)");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, -1));
+
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/partnersmanagement/Captura de ecrã 2017-09-30, às 23.13.29.png"))); // NOI18N
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 370));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -121,17 +147,38 @@ public class AddGUI extends javax.swing.JFrame {
 
     private boolean check() {
         boolean empty = this.addNameText.getText().equals("") || this.addCourseText.getText().equals("")
-              || this.addAdressText.getText().equals("") || this.addMailText.getText().equals("");
+              || this.addAdressText.getText().equals("") || this.addMailText.getText().equals("") ||
+                this.addPhoneNumber.getText().equals("") || this.addYear.getText().equals("");
         
-        if (empty)
+        if (empty){
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor preencha todos os dados.", "Dados incompletos", 0);
-        
-        return !empty;
+            return false;
+        }
+        else{
+            if(addPhoneNumber.getText().length()>9){
+                JOptionPane.showMessageDialog(this, "Demasiados algarismos!", "Número fixo de 9.", 0);
+                return false;
+            }
+            if(addPhoneNumber.getText().length()<9){
+                JOptionPane.showMessageDialog(this, "Poucos algarismos!", "Número fixo de 9.", 0);
+                return false;
+            }
+            if(addYear.getText().length()!=4){
+                JOptionPane.showMessageDialog(this, "O Ano deve possuir 4 algarismos!", "Obrigatório!", 0);
+                return false;
+            }
+            if(Double.parseDouble(addYear.getText())<2017){
+                JOptionPane.showMessageDialog(this, "Anos inferiores a 2017 são considerados inválidos.", "Obrigatório.", 0);
+                return false;
+            }
+        }
+        return true;
     }
     
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         // TODO add your handling code here:
         if(this.check()){
+            
             String mail = this.addMailText.getText();
             if(this.partners.containsPartner(mail)){
                 JOptionPane.showMessageDialog(null, "Nome já existente no sistema!");
@@ -144,11 +191,31 @@ public class AddGUI extends javax.swing.JFrame {
                 p.setNumber(this.partners.getN());
                 this.partners.setN(this.partners.getN()+1);
                 this.partners.addPartner(p);
-                
+                if(this.partners.containsPartner(p.getMail())) 
+                    JOptionPane.showMessageDialog(null, "Sócio " + p.getName() + " adicionado com sucesso!");
             }
             setVisible(false);
+            if(this.comesFromList == true){
+                new partnersListGUI(this.partners).setVisible(true);
+            }
         }
     }//GEN-LAST:event_confirmButtonActionPerformed
+
+    private void addPhoneNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_addPhoneNumberKeyTyped
+        // TODO add your handling code here:
+        char vchar = evt.getKeyChar();
+        if(!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_addPhoneNumberKeyTyped
+
+    private void addYearKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_addYearKeyTyped
+        // TODO add your handling code here:
+        char vchar = evt.getKeyChar();
+        if(!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_addYearKeyTyped
 
     /**
      * @param args the command line arguments
@@ -202,6 +269,7 @@ public class AddGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel phoneLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -93,8 +93,10 @@ public class quotaGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         payButton = new javax.swing.JButton();
+        closeButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane2.setViewportView(dateList);
@@ -120,7 +122,15 @@ public class quotaGUI extends javax.swing.JFrame {
                 payButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(payButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, -1, 40));
+        getContentPane().add(payButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 110, 30));
+
+        closeButton.setText("Fechar");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(closeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 110, 30));
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 370));
 
         pack();
@@ -131,6 +141,11 @@ public class quotaGUI extends javax.swing.JFrame {
         new payGUI(this.partners, this.mail).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_payButtonActionPerformed
+
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,6 +183,7 @@ public class quotaGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton closeButton;
     private javax.swing.JList<String> dateList;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

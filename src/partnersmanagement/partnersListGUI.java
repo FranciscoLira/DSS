@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -100,6 +101,8 @@ public class partnersListGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         deleteButton = new javax.swing.JButton();
         observButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
+        closeButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
@@ -121,12 +124,12 @@ public class partnersListGUI extends javax.swing.JFrame {
         jLdemo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setViewportView(jLdemo);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 440, 170));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 600, 170));
 
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Lista de Sócios");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
 
         deleteButton.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
         deleteButton.setText("Remover Sócio");
@@ -135,7 +138,7 @@ public class partnersListGUI extends javax.swing.JFrame {
                 deleteButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
+        getContentPane().add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, -1, -1));
 
         observButton.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
         observButton.setText("Ver Detalhes");
@@ -144,27 +147,62 @@ public class partnersListGUI extends javax.swing.JFrame {
                 observButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(observButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, -1, -1));
+        getContentPane().add(observButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, -1));
 
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 370));
+        addButton.setText("Adicionar Sócio");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 300, -1, -1));
+
+        closeButton.setText("Fechar");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(closeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 300, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-        String mail = jLdemo.getSelectedValue().toString();
-        this.partners.removePartner(mail);
-        setVisible(false);
-        new partnersListGUI(this.partners).setVisible(true);
+        if(jLdemo.getSelectedValue() != null){
+            String mail = jLdemo.getSelectedValue().toString();
+            this.partners.removePartner(mail);
+            setVisible(false);
+            new partnersListGUI(this.partners).setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Sem sócios para remover!");
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void observButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_observButtonActionPerformed
         // TODO add your handling code here:
-        String mail = jLdemo.getSelectedValue().toString();
-        openViewPartnerWindow(mail);
+        if(jLdemo.getSelectedValue() != null){
+            String mail = jLdemo.getSelectedValue().toString();
+            openViewPartnerWindow(mail);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Ainda sem sócios para observar!");
+        }
     }//GEN-LAST:event_observButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new AddGUI(this.partners, this).setVisible(true);
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,6 +238,8 @@ public class partnersListGUI extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton closeButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;

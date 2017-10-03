@@ -86,7 +86,7 @@ public class PartnersList extends Observable{
     public void removePartner(String mail){
         this.group.remove(mail);
     }
-    
+  
     public void updatePartner(String actualMail, String course, String newMail, String phone, String address){
         if(this.group.containsKey(newMail)){
             Partner p = this.group.get(newMail);

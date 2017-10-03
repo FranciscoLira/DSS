@@ -5,6 +5,9 @@
  */
 package partnersmanagement;
 
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Tiago
@@ -46,9 +49,9 @@ public class updatePartnerGUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         updateButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
@@ -68,12 +71,18 @@ public class updatePartnerGUI extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, -1));
         getContentPane().add(courseField, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 89, -1));
         getContentPane().add(mailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 89, -1));
+
+        phoneField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                phoneFieldKeyTyped(evt);
+            }
+        });
         getContentPane().add(phoneField, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 91, -1));
         getContentPane().add(addressField, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 90, -1));
 
         jLabel5.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 24)); // NOI18N
         jLabel5.setText("Atualização de dados");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, -1, -1));
 
         updateButton.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
         updateButton.setText("Atualizar");
@@ -93,8 +102,8 @@ public class updatePartnerGUI extends javax.swing.JFrame {
         });
         getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 86, -1));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/partnersmanagement/Captura de ecrã 2017-09-30, às 23.28.41.png"))); // NOI18N
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 290));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/partnersmanagement/Captura de ecrã 2017-09-30, às 23.28.41.png"))); // NOI18N
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -103,10 +112,21 @@ public class updatePartnerGUI extends javax.swing.JFrame {
         boolean empty = this.mailField.getText().equals("") || this.courseField.getText().equals("")
               || this.addressField.getText().equals("") || this.phoneField.getText().equals("");
         
-        if (empty)
+        if (empty){
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor preencha todos os dados.", "Dados incompletos", 0);
-        
-        return !empty;
+            return false;
+        }
+        else{
+            if(phoneField.getText().length()>9){
+                JOptionPane.showMessageDialog(this, "Demasiados algarismos!", "Número fixo de 9.", 0);
+                return false;
+            }
+            if(phoneField.getText().length()<9){
+                JOptionPane.showMessageDialog(this, "Poucos algarismos!", "Número fixo de 9.", 0);
+                return false;
+            }
+        }
+        return true;
     }
     
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
@@ -114,10 +134,10 @@ public class updatePartnerGUI extends javax.swing.JFrame {
         if(this.check()){
             this.partners.updatePartner(this.mail, courseField.getText(), mailField.getText(), phoneField.getText(), addressField.getText());
             this.mail = mailField.getText();
+            new partnersListGUI(this.partners).setVisible(true);
+            new partnersViewGUI(this.partners, this.mail).setVisible(true);
+            setVisible(false);
         }
-        new partnersListGUI(this.partners).setVisible(true);
-        new partnersViewGUI(this.partners, this.mail).setVisible(true);
-        setVisible(false);
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -126,6 +146,14 @@ public class updatePartnerGUI extends javax.swing.JFrame {
         new partnersViewGUI(this.partners, this.mail).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void phoneFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_phoneFieldKeyTyped
+        // TODO add your handling code here:
+        char vchar = evt.getKeyChar();
+        if(!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_phoneFieldKeyTyped
 
     /**
      * @param args the command line arguments
@@ -171,7 +199,7 @@ public class updatePartnerGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField mailField;
     private javax.swing.JTextField phoneField;
     private javax.swing.JButton updateButton;

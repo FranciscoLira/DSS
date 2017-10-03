@@ -5,6 +5,7 @@
  */
 package partnersmanagement;
 
+import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,31 +47,23 @@ public class payGUI extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        confirmButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         valueField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        dateField = new javax.swing.JTextField();
-        confirmButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
         jLabel1.setText("Pagamento de Quota");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 180, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 180, -1));
 
         jLabel2.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
         jLabel2.setText("Valor");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, 10));
-        getContentPane().add(valueField, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 57, -1));
-
-        jLabel3.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
-        jLabel3.setText("Data de pagamento");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
-        getContentPane().add(dateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 68, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, -1, 10));
 
         confirmButton.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
         confirmButton.setText("Confirmar");
@@ -80,26 +74,37 @@ public class payGUI extends javax.swing.JFrame {
         });
         getContentPane().add(confirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, -1, -1));
 
-        jButton1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
-        jButton1.setText("Cancelar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 90, -1));
-
-        jLabel4.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
-        jLabel4.setText("(dd-mm-aaaa)");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, -1, -1));
+        cancelButton.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
+        cancelButton.setText("Cancelar");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 90, -1));
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel6.setText("€");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 10, 20));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 10, 20));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/partnersmanagement/Captura de ecrã 2017-09-30, às 23.41.01.png"))); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 240));
+        valueField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valueFieldActionPerformed(evt);
+            }
+        });
+        valueField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                valueFieldKeyTyped(evt);
+            }
+        });
+        getContentPane().add(valueField, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 60, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 240));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
     private boolean check() {
-        boolean empty = this.valueField.getText().equals("") || this.dateField.getText().equals("");
+        boolean empty = this.valueField.getText().equals("");
         
         if (empty)
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor preencha todos os dados.", "Dados incompletos", 0);
@@ -107,21 +112,38 @@ public class payGUI extends javax.swing.JFrame {
         return !empty;
     }
     
+    
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         // TODO add your handling code here:
         if(this.check()){
-            DateFormat format = new SimpleDateFormat("dd-mm-yyyy");
-            try {
-                Quota q = new Quota(format.parse(dateField.getText()), Double.parseDouble(valueField.getText()));
+            try{
+                Quota q = new Quota(new Date(), Double.parseDouble(valueField.getText()));
                 this.partners.addQuotaToPartner(this.mail, q);
-            } catch (ParseException ex) {
-                Logger.getLogger(payGUI.class.getName()).log(Level.SEVERE, null, ex);
+                new quotaGUI(this.partners, this.mail).setVisible(true);
+                setVisible(false);
+            } catch(NumberFormatException e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Por favor, escrever NÙMEROS!!!!");
             }
-            new quotaGUI(this.partners, this.mail).setVisible(true);
-            setVisible(false);
-        }
-        
+       }
     }//GEN-LAST:event_confirmButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void valueFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_valueFieldKeyTyped
+        // TODO add your handling code here:
+        char vchar = evt.getKeyChar();
+        if(!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACK_SPACE) || (vchar == KeyEvent.VK_DELETE)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_valueFieldKeyTyped
+
+    private void valueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valueFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_valueFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,14 +181,11 @@ public class payGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelButton;
     private javax.swing.JButton confirmButton;
-    private javax.swing.JTextField dateField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField valueField;
     // End of variables declaration//GEN-END:variables
