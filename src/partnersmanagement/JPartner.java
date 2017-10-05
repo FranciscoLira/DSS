@@ -13,7 +13,7 @@ import javax.swing.DefaultListModel;
  *
  * @author Tiago
  */
-public class JPartner extends javax.swing.JFrame implements Observer {
+public class JPartner extends javax.swing.JFrame {
     
     private PartnersList partners;
     /**
@@ -22,7 +22,6 @@ public class JPartner extends javax.swing.JFrame implements Observer {
     public JPartner() {
         initComponents();
         this.partners = new PartnersList();
-        this.partners.addObserver(this);
     }
 
     /**
@@ -254,8 +253,4 @@ public class JPartner extends javax.swing.JFrame implements Observer {
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

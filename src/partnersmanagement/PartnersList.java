@@ -81,6 +81,8 @@ public class PartnersList extends Observable{
     
     public void addPartner(Partner p){
         this.group.put(p.getMail(), (Partner) p.clone());
+        this.setChanged();
+        this.notifyObservers();
     }
     
     public void removePartner(String mail){

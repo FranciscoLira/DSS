@@ -7,6 +7,8 @@ package partnersmanagement;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -19,7 +21,7 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author Tiago
  */
-public class partnersListGUI extends javax.swing.JFrame {
+public class partnersListGUI extends javax.swing.JFrame implements Observer{
     
     private PartnersList partners;
     private DefaultListModel dlm = null;
@@ -35,6 +37,7 @@ public class partnersListGUI extends javax.swing.JFrame {
     public partnersListGUI(PartnersList p){
         this.partners = p;
         initComponents();
+        this.partners.addObserver(this);
     }
    
     private DefaultListModel getListModel(PartnersList l){
@@ -57,7 +60,6 @@ public class partnersListGUI extends javax.swing.JFrame {
                     if (e.getClickCount() == 2 && jLdemo.getSelectedValue() != null) {
                         String mail = jLdemo.getSelectedValue().toString();
                         openViewPartnerWindow(mail);
-                        //getLblTextoSelecionado().setText("Elemento selecionado: " + text);
                     }
                 }
             });
@@ -68,16 +70,10 @@ public class partnersListGUI extends javax.swing.JFrame {
         return jLdemo;
     }
     
-    private JLabel getLblTextoSelecionado() {
-        if (jLabel1 == null) {
-            jLabel1 = new JLabel("Clique em um item do JLabel");
-        }
-        return jLabel1;
-    }
     
     private void openViewPartnerWindow(String mail){
         new partnersViewGUI(this, this.partners, mail).setVisible(true);
-        //setVisible(false);
+        setVisible(false);
     }
     
     /**
@@ -235,6 +231,11 @@ public class partnersListGUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new partnersListGUI().setVisible(true);
         });
+    }
+    
+    @Override
+    public void update(Observable o, Object arg) {
+        this.partners = (PartnersList) o;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
