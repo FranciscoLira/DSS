@@ -7,12 +7,13 @@ package partnersmanagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 /**
  *
  * @author Tiago
  */
-public class Partner {
+public class Partner implements Serializable {
     
     private String name;
     private int number;

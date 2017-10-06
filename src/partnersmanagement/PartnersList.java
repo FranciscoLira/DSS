@@ -10,12 +10,13 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.TreeMap;
 import java.util.*;
+import java.io.Serializable;
 
 /**
  *
  * @author Tiago
  */
-public class PartnersList extends Observable{
+public class PartnersList extends Observable implements Serializable {
     
     private int y;//ano de inscriçao do socio
     private int n;//numero de socio

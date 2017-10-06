@@ -5,23 +5,32 @@
  */
 package partnersmanagement;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultListModel;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.File;
+import java.io.Serializable;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  *
  * @author Tiago
  */
-public class JPartner extends javax.swing.JFrame {
+public class JPartner extends javax.swing.JFrame implements Serializable {
     
     private PartnersList partners;
     /**
      * Creates new form JPartner
      */
     public JPartner() {
+        StartApp();
         initComponents();
-        this.partners = new PartnersList();
     }
 
     /**
@@ -153,8 +162,13 @@ public class JPartner extends javax.swing.JFrame {
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Gestor de Sócios");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                EndApp(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         addButton.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 13)); // NOI18N
@@ -191,6 +205,21 @@ public class JPartner extends javax.swing.JFrame {
         new partnersListGUI(this.partners).setVisible(true);
     }//GEN-LAST:event_consultingButtonActionPerformed
 
+    private void EndApp(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_EndApp
+        // TODO add your handling code here:
+        try {
+				FileOutputStream fos = new FileOutputStream("data");
+                                ObjectOutputStream oos = new ObjectOutputStream(fos);
+				oos.writeObject(this.partners);
+		oos.flush();
+            oos.close();
+            System.out.println("Guardado!");
+            System.exit(0);
+	} catch (Exception e) {
+            System.out.println(e.getMessage());
+	}
+    }//GEN-LAST:event_EndApp
+
     /**
      * @param args the command line arguments
      */
@@ -223,8 +252,43 @@ public class JPartner extends javax.swing.JFrame {
             public void run() {
                 new JPartner().setVisible(true);
             }
-        });
+          
+         });
+        
+        
+   
     }
+    
+    
+    public void StartApp(){
+        try {            
+            File f = new File("data");
+            if (f.exists()){
+                FileInputStream fis = new FileInputStream("data");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		this.partners = (PartnersList) ois.readObject();
+		ois.close();
+                System.out.println("Successfully loaded state.");
+            }
+            else { this.partners = new PartnersList(); }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+	public void EndApp(){
+			try {
+				FileOutputStream fos = new FileOutputStream("data");
+                                ObjectOutputStream oos = new ObjectOutputStream(fos);
+				oos.writeObject(this.partners);
+				oos.flush();
+				oos.close();
+				System.out.println("Guardado!");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

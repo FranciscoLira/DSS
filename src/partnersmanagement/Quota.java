@@ -7,12 +7,13 @@ package partnersmanagement;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.io.Serializable;
 
 /**
  *
  * @author Tiago
  */
-public class Quota {
+public class Quota implements Serializable {
     
     private Date date;
     private double value;
