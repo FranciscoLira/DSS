@@ -6,6 +6,6 @@
 ###
 <p>Project made by:</p>
 
-<p> [Sérgio](http://github.com/a-sac) </p>
-<p> [Tiago](http://github.com/tdaa) </p>
-<p> [Francisco](http://github.com/FranciscoLira) </p>
+[Sérgio](http://github.com/a-sac) <br>
+[Tiago](http://github.com/tdaa) <br>
+[Francisco](http://github.com/FranciscoLira)
