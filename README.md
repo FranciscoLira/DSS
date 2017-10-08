@@ -1,6 +1,6 @@
 # DSS
 
-<p>Basicly a swing application made with Java/SWING to manage partners for an institution.</p>
+<p>Basicly an application made with Java/SWING to manage partners for an institution.</p>
 <p>You can add new partners, watch the list of partners and their information (email, name, phone numbar, dates of share payments).<p>
 
 ### Project made by:
